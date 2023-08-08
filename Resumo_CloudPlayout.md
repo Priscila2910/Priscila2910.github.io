@@ -6,55 +6,141 @@ Central Casting é um conjunto de elementos responsáveis pelo gerenciamento e p
 
 ### Topologia
 
-Topologia Central Casting Belo Horizonte:
+Topologia da solução Central Casting Belo Horizonte:
+
+<img src="CENTRAL CASTING - V2.jpg">
+
+
+### Infraestrutura
+
+Para a implementação da infraestrutura em Belo Horizonte, foram disponibilizados dois Switches Cisco C9300L-48T-4X, aprovisionados em stack, com hostname MG-BH-CTD-CCAST, dedicados a Central Casting. 
+
+<img src="C9300L-switch-cisco.jpg">
+
+Fisicamente, a pilha de switches, MG-BH-CTD-CCAST, foram conectados aos Switches Nexus9000 (CORE-WAN-01/02) nas interfaces Te1/1/1 e Te2/1/1. Os demais equipamentos da Central Casting foram conectados nas interfaces conforme tabela abaixo.  
+
+<img src="Interfaces-SWCCAST.png">
+
+### Configuração
+
+A  comunicação entre os equipamentos é toda realizada em Layer3. Sendo utilizado OSPF entre o switch BH-MG-CTD-CCAST e CORE-WAN-01/02 e por BGP nos enlaces com o equipamentos do MPLS e o Fortigate 600E. Todo o tráfego entre as redes de Belo Horizonte e o Rio de Janeiro passam pela VRF WAN-VRF_EXIB_SENSITIVE.
+
+#### VLANs e SUBNETs
+
+Segue a tabela com as Vlans e subredes alocadas para a solução.
+
+<img src="VLANS-SUBREDES.png">
+
+#### Configuração no CORE-WAN-01/02
+
+Nos switches Nexus 9000 (CORE-WAN-01 e CORE-WAN-02), configuramos o BGP para estabelecer sessão com o Fortigate-600E e com os neighbors do MPLS1 E MPLS2 na VRF WAN-VRF_EXIB_SENSITIVE. As rotas conhecidas nesta instância são:
+
+
+
+
+*MG-BH-WAN-CORE-01# sh ip route vrf WAN-VRF_EXIB_SENSITIVE
+IP Route Table for VRF "WAN-VRF_EXIB_SENSITIVE"*
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop*
+*'[x/y]' denotes [preference/metric]*
+*'%<string>' in via output denotes VRF <string>*
+
+*0.0.0.0/0, ubest/mbest: 1/0*
+*via 10.173.253.211, [200/0], 6d02h, bgp-65002, internal, tag 65002*
+**10.12.80.0/26, ubest/mbest: 1/0*
+ *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.80.68/30, ubest/mbest: 1/0*
+ *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.80.72/30, ubest/mbest: 1/0*
+*via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.80.76/30, ubest/mbest: 1/0*
+*via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.80.78/32, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.80.128/27, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d01h, bgp-65002, external, tag 65010*
+*10.12.81.0/24, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.81.0/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.81.64/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.81.128/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.81.192/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.82.0/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.12.83.0/25, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d01h, bgp-65002, external, tag 65010*
+*10.12.83.128/25, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d01h, bgp-65002, external, tag 65010*
+*10.12.84.0/29, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.35.8.142/32, ubest/mbest: 1/0*
+*    *via 10.173.254.206, Vlan670, [250/101], 1w0d, ospf-GLOBO, intra*
+*10.173.106.0/28, ubest/mbest: 1/0*
+*    *via 10.173.254.206, Vlan670, [250/101], 5d02h, ospf-GLOBO, intra*
+*10.173.107.0/24, ubest/mbest: 1/0*
+*    *via 10.173.254.206, Vlan670, [250/101], 5d02h, ospf-GLOBO, intra*
+*10.173.109.0/24, ubest/mbest: 1/0*
+*    *via 10.173.254.206, Vlan670, [250/101], 5d01h, ospf-GLOBO, intra*
+*10.173.253.208/29, ubest/mbest: 1/0, attached*
+*    *via 10.173.253.209, Vlan672, [0/0], 1w0d, direct*
+*10.173.253.209/32, ubest/mbest: 1/0, attached*
+*    *via 10.173.253.209, Vlan672, [0/0], 1w0d, local*
+*10.173.253.216/29, ubest/mbest: 1/0, attached *
+*    *via 10.173.253.217, Vlan673, [0/0], 1w0d, direct*
+*10.173.253.217/32, ubest/mbest: 1/0, attached*
+*    *via 10.173.253.217, Vlan673, [0/0], 1w0d, local*
+*10.173.253.224/29, ubest/mbest: 1/0, attached*
+*    *via 10.173.253.225, Vlan674, [0/0], 1w0d, direct*
+*10.173.253.225/32, ubest/mbest: 1/0, attached*
+*    *via 10.173.253.225, Vlan674, [0/0], 1w0d, local*
+*10.173.253.232/29, ubest/mbest: 1/0, attached*
+*    *via 10.173.253.233, Vlan675, [0/0], 1w0d, direct*
+*10.173.253.232/30, ubest/mbest: 1/0*
+*    *via 10.173.253.234, Vlan675, [250/200], 1w0d, ospf-GLOBO, intra*
+*10.173.253.233/32, ubest/mbest: 1/0, attached*
+*    *via 10.173.253.233, Vlan675, [0/0], 1w0d, local*
+*10.173.254.204/30, ubest/mbest: 1/0, attached*
+*    *via 10.173.254.205, Vlan670, [0/0], 1w1d, direct*
+*10.173.254.205/32, ubest/mbest: 1/0, attached*
+*    *via 10.173.254.205, Vlan670, [0/0], 1w1d, local*
+*10.173.254.212/30, ubest/mbest: 1/0*
+*    *via 10.173.254.206, Vlan670, [250/101], 1w0d, ospf-GLOBO, intra*
+*10.193.48.128/27, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.48.160/27, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.48.192/27, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.49.0/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.49.64/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.49.128/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.49.192/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.50.32/27, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.116.192/26, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
+*10.193.152.0/27, ubest/mbest: 1/0*
+*    *via 10.173.253.219, [20/0], 6d02h, bgp-65002, external, tag 65010*
 
 
 
 
 
 
-Dentre esses componentes, a Automação, o Playout e os Gateways SRT virtuais são a parte da infraestrutura que está em fase de migração para a nuvem, os demais componentes seguirão na infraestrutura on-premise. As aplicações da nuvem estão no ambiente da Google Cloud Platform (GCP), nas regiões do Estados Unidos (us-east1), Europa (europe-west1 e europe-southwest1) e América do Sul (southamerica-east1). A divisão dos canais por região está prevista da seguinte forma: 
-•Estados Unidos: 2 Canais Tier 4 e 16 Canais Tier 3 
-•América do Sul: 18 canais Canais Tier 2 
 
-Além da estrutura na nuvem, que é o sistema titular do Cloud Playout, também existe uma estrutura física com as mesmas aplicações que temos na nuvem, porém elas estão instaladas em servidores on-premise. 
 
-Sobre os principais componentes do Cloud Playout: 
 
-### Automação
 
-A aplicação que usamos para a automação, é o ASTRA do fornecedor AVECO. Ela é responsável por fazer o controle e gerenciamento das mídias, e está instalada em quatro máquinas virtuais (VM) na Google Cloud Engine (GCE), sendo: 
-•1 VM Back office: controla até 7 playlists, além de conter o banco de dados 
-•2 VMs Orbiters: cada Orbiter controla até 7 playlists
-•1 VM MULE: gerencia ativos de mídia verificando sua disponibilidade nos storages on-premise (G800 e DIVA), além de enviar comandos para upload de mídia no Playout (VoS). 
 
-Em uma operação padrão, o usuário acessa o client da aplicação ASTRA instalada em uma máquina no ambiente on-premise, para fazer o upload da playlist com a programação dos próximos dias. Essa playlist tem metadados necessários para que a automação reconheça o momento em que essa mídia será tocada (início, fim, duração, ID, ...). Se a automação identificar que as mídias já estão no Playout, o ASTRA indica para operador que essas mídias estão prontas para serem tocadas. Caso esteja faltando alguma mídia, a automação faz uma requisição ao Playout (VoS) para que ele localize as mídias faltantes nos servidores on-premise, e faça a transferência dessas mídias para o Storage na nuvem (Google Cloud Storage – GCS) 
 
-![img](ASTRA AVECO.png "Automação ASTRA (AVECO)")
-
-### Playout
-
-A aplicação que usamos para o Playout, é o VoS do fornecedor Harmonic. Ela está instalada no Google Cloud Kubernetes (GKE), podendo ser acessada via web browser. Além de receber as requisições de transferência de mídias da automação (ASTRA), o VoS também é responsável por criar canais, fazer o encoding de áudio e vídeo, fazer o processamento de grafismo, gerar saídas SRT para os gateways on-premise (ION) e virtuais (GCP – Europa). Outra função importante do VOS é a recepção dos sinais de Live feeds via protocolo SRT. 
-
-![img](VOS.png "Playout VoS (HARMONIC)")
-
-### Mídias e Live Feeds
-
-Existe a possibilidade do sistema Cloud Playout receber mídias já gravadas (novelas, comerciais, chamadas, ...) e sinais de eventos ao vivo, chamados de Live Feeds (jogo de futebol, shows, ...). As mídias gravadas estão armazenadas em storages on-premise que são o G800 (acessados via NAS-1 e NAS-2) e o Diva. Já os Live Feeds são recebidos via SDI pelo encoder CP9000 (Harmonic) e enviados via protocolo TS para a rede. Tantos os storages, quanto os encoders estão no ambiente Globo on-premise. 
-
-### Gateways SRT virtuais e físicos
-
-O Haivision Media Gateway (HMG) é usado para receber os fluxos SRT gerados pelo VoS, e estão em uso no Cloud Playout tanto em aplicações instaladas em VMs no GCE, quanto no ambiente on-premise no ION. No ION, são recebidos os fluxos SRT dos Canais Tier 3 e enviados como TS para a cadeia de transmissão. Já os gateways HMG virtuais estão em VMs na nuvem da Europa e são enviados para uma operadora em Portugal.
-
-### Monitoração de áudio e vídeo 
-
-Para monitoração de áudio e vídeo, são usadas duas aplicações: o TAG Multiviewer e o Kaleido-IP. O TAG Multiviewer é uma aplicação que está instalada na GCE, e recebe fluxo SRT diretamente do VOS. Esse multiviewer é acessado via web browser e permite a criação de mosaicos personalizados que podem ser criados conforme a necessidade da operação.
-
-![img](TAG Multiviewer.png "TAG Multiviewer")
-
-Já o Kaleido-IP está no ambiente on-premise, cujo multiviewer está exibido em monitores da exibição, recebendo um sinal TS gerado pelo Gateway SRT on-premise. 
-
-![img](Kaleido-IP.png "Multiviewer Kaleido-IP")
 
 
 
