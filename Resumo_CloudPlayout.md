@@ -1,16 +1,17 @@
-# Cloudification Playout
+# Central Casting Belo Horizonte
 
 ## Overview
 
-Um sistema de Playout tem como função disponibilizar mídias gravadas ou conteúdo ao vivo para que sejam exibidos em diferentes canais. O projeto Cloudification Playout tem como objetivo migrar parte desse sistema de exibição da infraestrutura on-premise, para a infraestrutura na nuvem.  Mais especificamente, serão migrados todos os canais da TV Fechada, divididos em Tiers de acordo com a complexidade do canal/impacto para o consumidor. 
-O Cloud Playout tem os seguintes componentes principais: 
-•Automação 
-•Playout 
-•Mídias e Live Feeds 
-•Gateways SRT virtuais e físicos 
-•Monitoração de áudio e vídeo 
+Central Casting é um conjunto de elementos responsáveis pelo gerenciamento e programação do conteúdo a ser reproduzido na TV. O sistema funciona de forma automatizada e centralizada, ou seja, vários canais são gerenciados por software em um mesmo local. Com intuito de melhoria na operação, a solução de automação e programação do Central Casting de Belo Horizonte, plataforma Pebble, foi migrada para a TV Globo no Rio de Janeiro. 
 
-![img](Cloud_Playout Overview.png "Cloud Playout - Overview")
+### Topologia
+
+Topologia Central Casting Belo Horizonte:
+
+
+
+
+
 
 Dentre esses componentes, a Automação, o Playout e os Gateways SRT virtuais são a parte da infraestrutura que está em fase de migração para a nuvem, os demais componentes seguirão na infraestrutura on-premise. As aplicações da nuvem estão no ambiente da Google Cloud Platform (GCP), nas regiões do Estados Unidos (us-east1), Europa (europe-west1 e europe-southwest1) e América do Sul (southamerica-east1). A divisão dos canais por região está prevista da seguinte forma: 
 •Estados Unidos: 2 Canais Tier 4 e 16 Canais Tier 3 
