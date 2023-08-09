@@ -1,7 +1,8 @@
-# Migração da Pebble de Belo Horizonte
+# Arquitetura Pebble - Belo Horizonte
 
 ## Overview
 
+A automação e programação do conteúdo, Pebble, fica localizado no ION - Rio de Janeiro e o DR em Belo Horizonte. O documento atual mostra a implementação para o fluxo de tráfego do sistema DR de Belo Horizonte.
 
 ### Topologia
 
@@ -12,7 +13,7 @@ Topologia da solução Pebble de Belo Horizonte:
 
 ### Infraestrutura
 
-Para a implementação da infraestrutura de automatoção de DR em Belo Horizonte, foram utilizados dois Switches Cisco C9300L-48T-4X, aprovisionados em stack, com hostname MG-BH-CTD-CCAST, ip de gerência 10.35.8.142 com acesso via SSH.
+Para a implementação da infraestrutura de automatoção de DR em Belo Horizonte, foram utilizados dois Switches Cisco C9300L-48T-4X, aprovisionados em stack, com hostname MG-BH-CTD-CCAST, ip de gerência 10.35.8.142 com acesso via SSH. Também, foi inserido no Zabbix.
 
 <img src="C9300L-switch-cisco.jpg">
 
@@ -225,7 +226,7 @@ SP - São Paulo
 
 Segue abaixo, a tabela com as Vlans e subredes alocadas para a solução. As vlans 406, 407 e 409 são locais no switch MG-BH-CTD-CCAST. As demais são destinadas aos enlaces. 
  
-<img src="VLAN-SUBREDES.png">
+<img src="VLAN-SUBREDES2.png">
 
 
 #### Rotas conhecidas na VRF WAN-VRF_EXIB_SENSITIVE
