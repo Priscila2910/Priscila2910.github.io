@@ -195,25 +195,25 @@ SP - São Paulo
   ----------------------------  
   
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.128/27 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.128/27*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.160/27 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.160/27*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.192/27 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.192/27*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.224/27 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.48.224/27*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.0/26 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.0/26*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.64/26 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.64/26*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.128/26 *   
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.128/26*   
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.192/26 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.49.192/26*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.152.0/27 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.152.0/27*  
 
-*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.116.192/26 *  
+*ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.116.192/26*  
 
 *ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.50.32/27*   
 
