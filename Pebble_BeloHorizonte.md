@@ -21,6 +21,15 @@ Fisicamente, a pilha de switches, MG-BH-CTD-CCAST, está conectado aos Switches 
 
 <img src="Interfaces-SWCCAST.png">
 
+  
+
+
+### VLANs e SUBNETs
+
+Segue abaixo, a tabela com as Vlans e subredes alocadas para a solução. As vlans 406, 407 e 409 são locais no switch MG-BH-CTD-CCAST. As demais são destinadas aos enlaces. 
+ 
+<img src="VLAN-SUBREDES2.png">
+
 ### Configuração
 
 A  comunicação entre os equipamentos é toda realizada em Layer3. No switch BH-MG-CTD-CCAST foi configurado OSPF para propagação de rotas com os switches CORE-WAN-01/02, conforme abaixo. 
@@ -219,14 +228,6 @@ SP - São Paulo
 *ip prefix-list MPLS-WAN-EXIB-SENS-IN permit 10.193.50.32/27*   
 
   ------------------  
-  
-
-
-#### VLANs e SUBNETs
-
-Segue abaixo, a tabela com as Vlans e subredes alocadas para a solução. As vlans 406, 407 e 409 são locais no switch MG-BH-CTD-CCAST. As demais são destinadas aos enlaces. 
- 
-<img src="VLAN-SUBREDES2.png">
 
 
 #### Rotas conhecidas na VRF WAN-VRF_EXIB_SENSITIVE
