@@ -227,12 +227,6 @@ Segue abaixo, a tabela com as Vlans e subredes alocadas para a solução. Sendo 
  
 <img src="VLAN-SUBREDES.png">
 
-#### Filtros BGP MPLS
-
-A
-ip prefix-list MPLS-WAN-EXIB-SENS-OUT permit 10.173.109.0/24
-ip prefix-list MPLS-WAN-EXIB-SENS-OUT permit 10.173.107.0/24
-
 
 #### Rotas conhecidas na VRF WAN-VRF_EXIB_SENSITIVE
 
